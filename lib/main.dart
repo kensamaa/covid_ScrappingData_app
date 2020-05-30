@@ -56,10 +56,17 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     this.getJsonData();
   }
+
   Future<String> getJsonData()async{
-    var response=await http.get(
-      Uri.encodeFull(api),
-      headers:{"Accept":"application/json"});
+    try {//if the backend is workign or not
+      var response=await http.get(
+          Uri.encodeFull(api),
+          headers:{"Accept":"application/json"});
+    }
+    catch(e){
+      print("back end not working");
+    }
+
     //print(response.body);
 
     setState(() {

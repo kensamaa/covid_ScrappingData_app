@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 import 'CoronaData.dart';
+import 'mapPage.dart';
 const url="https://www.worldometers.info/coronavirus/country/morocco/";
 
 void main() => runApp(MyApp());
@@ -58,8 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> getJsonData()async{
+    var response=null;
     try {//if the backend is workign or not
-      var response=await http.get(
+       response=await http.get(
           Uri.encodeFull(api),
           headers:{"Accept":"application/json"});
     }
@@ -135,168 +137,179 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: PageView(
         children: <Widget>[
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration:
-              BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.teal,
-                    Colors.greenAccent
-                  ]
-                ),
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                color: Color(0xFFE5E5E5),
+         Column(
+          children: <Widget>[
+              Container(
+                height: 200,
+                width: double.infinity,
+                decoration:
+                BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.teal,
+                      Colors.greenAccent
+                    ]
+                  ),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                  color: Color(0xFFE5E5E5),
+                  ),
                 ),
               ),
+            SizedBox(
+              height: 20,//leaves the space beetwen the green header and case update
             ),
-          SizedBox(
-            height: 20,//leaves the space beetwen the green header and case update
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'case update\n\n',
-                            style: kTitleTextstyle,//from the constant file
-                              ),
-                          TextSpan(
-                            text: "last update "+ddate,
-                              style: TextStyle(
-                                color: kTextLightColor,
-                              ) ,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'case update\n\n',
+                              style: kTitleTextstyle,//from the constant file
+                                ),
+                            TextSpan(
+                              text: "last update "+ddate,
+                                style: TextStyle(
+                                  color: kTextLightColor,
+                                ) ,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        onPressed: (){
+                          _launchURL(url);
+                        },
+                        child: Text(
+                            "see detailes",
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: (){
-                        _launchURL(url);
-                      },
-                      child: Text(
-                          "see detailes",
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                  ],
-                ),//case update
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        blurRadius: 30,
-                        color: kShadowColor,
-                      ),
                     ],
+                  ),//case update
+                  SizedBox(
+                    height: 20,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //*****************these are the infected death cured cards
-                      Counter(
-                        color: kInfectedColor,
-                        number: corona.cases,
-                        title: "Infected",
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Counter(
-                        color: kDeathColor,
-                        number: corona.dead,
-                        title: "Deaths",
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Counter(
-                        color: kRecovercolor,
-                        number: corona.cured,
-                        title: "Recovered",
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Counter(
-                        color: kAwaycolor,
-                        number: awway,
-                        title: "away",
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  child:  Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Countercity(color: kCountrycolor, number: casablanca, title: "casablanca",),
-                          Countercity(color: kCountrycolor, number: marakech, title: "marakech",),
-                        Countercity(color: kCountrycolor, number: Rabat, title: "Rabat",),
-                        Countercity(color: kCountrycolor, number: tanger, title: "tanger",),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 30,
+                          color: kShadowColor,
+                        ),
                       ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        //*****************these are the infected death cured cards
+                        Counter(
+                          color: kInfectedColor,
+                          number: corona.cases,
+                          title: "Infected",
                         ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                        children: <Widget>[
-                          Countercity(color: kCountrycolor, number: Fesmeknes, title: "Fesmeknes",),
-                          Countercity(color: kCountrycolor, number: oriental, title: "oriental",),
-                          Countercity(color: kCountrycolor, number: beniMellal, title: "beniMellal",),
-                          Countercity(color: kCountrycolor, number: DaraaTafilalet, title: "Tafilalet",),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Countercity(color: kCountrycolor, number: DakhlaOuedEdDahab, title: "OuedEdDahab",),
-                          Countercity(color: kCountrycolor, number: SoussMassa, title: "SoussMassa",),
-                          Countercity(color: kCountrycolor, number: LaayouneSakiaElHamra, title: "Laayoune",),
-                          Countercity(color: kCountrycolor, number: Guelmim, title: "Guelmim",),
-                        ],
-                      ),
-                    ],
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Counter(
+                          color: kDeathColor,
+                          number: corona.dead,
+                          title: "Deaths",
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Counter(
+                          color: kRecovercolor,
+                          number: corona.cured,
+                          title: "Recovered",
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Counter(
+                          color: kAwaycolor,
+                          number: awway,
+                          title: "away",
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),//body basically
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child:  Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Countercity(color: kCountrycolor, number: casablanca, title: "casablanca",),
+                            Countercity(color: kCountrycolor, number: marakech, title: "marakech",),
+                          Countercity(color: kCountrycolor, number: Rabat, title: "Rabat",),
+                          Countercity(color: kCountrycolor, number: tanger, title: "tanger",),
+                        ],
+                          ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                          children: <Widget>[
+                            Countercity(color: kCountrycolor, number: Fesmeknes, title: "Fesmeknes",),
+                            Countercity(color: kCountrycolor, number: oriental, title: "oriental",),
+                            Countercity(color: kCountrycolor, number: beniMellal, title: "beniMellal",),
+                            Countercity(color: kCountrycolor, number: DaraaTafilalet, title: "Tafilalet",),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Countercity(color: kCountrycolor, number: DakhlaOuedEdDahab, title: "OuedEdDahab",),
+                            Countercity(color: kCountrycolor, number: SoussMassa, title: "SoussMassa",),
+                            Countercity(color: kCountrycolor, number: LaayouneSakiaElHamra, title: "Laayoune",),
+                            Countercity(color: kCountrycolor, number: Guelmim, title: "Guelmim",),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),//body basically
+          ],
+        ),
+          //the second page*******************************
+          mapPage(),
+
+
+
         ],
+
+
       ),  //all the screen
     );
   }

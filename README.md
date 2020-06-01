@@ -2,15 +2,18 @@
 
 frontend corona virus app 
 
-## Getting Started
+## app interface
 
-This project is a starting point for a Flutter application.
+![](images/1.png)
 
-A few resources to get you started if this is your first Flutter project:
+## to use this app
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p>this app use a personal api i mad ,before running the app you should clone 
+the moroccocovid backend  repo and run it </p>
+<p><a href="https://github.com/kensamaa/coronaMorocco_api_backend_nodejs">backend repository</a></p>
+<h3>dependencies</h3>
+<ul>
+  <li>charts_flutter: ^0.9.0</li>
+  <li>  http: ^0.12.1</li>
+</ul>
+<p>for future implementation i m gonna use chart and  google map and geolocalisation dependencies</p>

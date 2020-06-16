@@ -1,7 +1,9 @@
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+
 
 class mapPage extends StatefulWidget {
   @override
@@ -14,12 +16,19 @@ class _mapPageState extends State<mapPage> {
   Position position;
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
-  List<Marker> markers;
+  //List<Marker> markers;
+  String deviceId,id;
   //String _currentAddress;
+  DeviceInfoPlugin deviceInfo =
+  DeviceInfoPlugin(); // instantiate device info plugin
+  AndroidDeviceInfo androidDeviceInfo;
 
   void initState(){
     super.initState();
     _getCurrentLocation();
+    //setId();
+    getDeviceinfo();
+
   }
   _getCurrentLocation() {
     geolocator
@@ -28,18 +37,46 @@ class _mapPageState extends State<mapPage> {
       setState(() {
         _currentPosition = position;
       });
+
       print("location");
-      print(_currentPosition.latitude.runtimeType);
-      print(_currentPosition.longitude.runtimeType);
+      print(_currentPosition.latitude.toString());
+      print(_currentPosition.longitude.toString());
 
 
     }).catchError((e) {
       print(e);
     });
   }
+
   getPosition()async{
      position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
+  }
+  /*
+  setId() async {
+    deviceId = await _getId();
+    print(deviceId);
+  }
+  Future<String> _getId() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
+  }*/
+  void getDeviceinfo() async {
+    androidDeviceInfo = await deviceInfo
+        .androidInfo; // instantiate Android Device Infoformation
+    setState(() {
+
+      id = androidDeviceInfo.id;
+
+    });
+    print("id");
+    print(id);
   }
 
   @override

@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //*******************+api
   final String api="http://192.168.1.42:5000/last";
+  //final String api="http://192.168.43.195:5000/last";
   String awway,ddate;
   CoronaData corona;
   String casablanca,marakech,Rabat,tanger,Fesmeknes,oriental,beniMellal,DaraaTafilalet,DakhlaOuedEdDahab,SoussMassa,LaayouneSakiaElHamra,Guelmim;

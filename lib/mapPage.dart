@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:covidapp/widgets/user.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+//import 'package:flutter_blue/flutter_blue.dart';
+
 
 
 class mapPage extends StatefulWidget {
@@ -17,31 +23,73 @@ class _mapPageState extends State<mapPage> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   //List<Marker> markers;
-  String deviceId,id;
-  //String _currentAddress;
-  DeviceInfoPlugin deviceInfo =
-  DeviceInfoPlugin(); // instantiate device info plugin
+  String deviceId,id,latitude,longitude;
+  DeviceInfoPlugin deviceInfo =DeviceInfoPlugin(); // instantiate device info plugin
   AndroidDeviceInfo androidDeviceInfo;
+  //FlutterBlue flutterBlue = FlutterBlue.instance;//Obtain an instance
 
-  void initState(){
+  // Start scanning
+  /*flutterBlue.startScan(timeout: Duration(seconds: 4));
+  // Listen to scan results
+
+  var subscription = flutterBlue.scanResults.listen((results) {
+    // do something with scan results
+    for (ScanResult r in results) {
+        print('${r.device.name} found! rssi: ${r.rssi}');
+    }
+});
+*/
+  Future<void> initState()  {
     super.initState();
-    _getCurrentLocation();
+    _getCurrentLocation();//get the location
     //setId();
-    getDeviceinfo();
+    getDeviceinfo();//get the id
+    //createAlbum(id,latitude,longitude);
+    //final User user = await createUser(id, latitude,longitude);
+    //user u=new user(id,longitude,latitude);
+    sendDataUser("id","latitude","longitude");
 
   }
+
+  Future<http.Response> sendDataUser(String id,String lar,String lon) async {
+    var now = new DateTime.now();
+    final http.Response response = await http.post(
+      'http://192.168.1.42:5000/user/add',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "PhoneId":id,
+        "latitude":lar,
+        "longitude": lon,
+        "date": now.toString()
+      }),
+    );
+    if (response.statusCode == 201) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      print("done");
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to load data');
+    }
+  }
+
   _getCurrentLocation() {
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
+        latitude=_currentPosition.latitude.toString();
+        longitude=_currentPosition.longitude.toString();
       });
 
       print("location");
-      print(_currentPosition.latitude.toString());
-      print(_currentPosition.longitude.toString());
-
+      latitude=_currentPosition.latitude.toString();
+      longitude=_currentPosition.longitude.toString();
+      sendDataUser("id","latitude","longitude");
 
     }).catchError((e) {
       print(e);
@@ -75,6 +123,7 @@ class _mapPageState extends State<mapPage> {
       id = androidDeviceInfo.id;
 
     });
+    id = androidDeviceInfo.id;
     print("id");
     print(id);
   }

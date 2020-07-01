@@ -14,6 +14,7 @@ flutter application that shows the updates of corona virus in morocco and showin
 <p>this app use a personal api i mad ,before running the app you should clone 
 the moroccocovid backend  repo and run it </p>
 <p><a href="https://github.com/kensamaa/CovidMoroccoScrapper">backend repository</a></p>
+<p>here is the <a href='https://drive.google.com/drive/folders/1skWrjne7qCSDUqwIvLqKM8k2nERIE6mZ?usp=sharing'>link</a>to video demo</p>
 <p>swipe right to see map and ur localisation, in the background the app will send data of ur android ip and your localisation and stock it in the database </p>
 
 <h3>dependencies</h3>

@@ -1,6 +1,5 @@
 import 'package:covidapp/constant.dart';
-import 'package:covidapp/widgets/chart.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covidapp/widgets/counter.dart';
 import 'package:covidapp/widgets/counterCity.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +45,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   //*******************+api
-  final String api="http://192.168.1.42:5000/last";
+    final String api="http://192.168.1.5:5000/last";//home
+  //final String api="http://192.168.1.42:5000/last";//school
   //final String api="http://192.168.43.195:5000/last";
   String awway,ddate;
   CoronaData corona;
@@ -158,8 +158,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   border: Border.all(
                   color: Color(0xFFE5E5E5),
                   ),
+                  
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topCenter,
+          
+                      ),
+                      SizedBox(height: 50,),
+                      Expanded(
+                        child: Stack(
+                          children: <Widget>[
+                            SvgPicture.asset('images/covid.svg',
+                            fit: BoxFit.fitHeight,
+                            alignment: Alignment.topCenter,
+                           
+                            
+                            )
+                          ],
+                      ),),SizedBox(height: 20,),
+                ],),
+                
               ),
+              //Image.asset('images/covid.svg'),
             SizedBox(
               height: 20,//leaves the space beetwen the green header and case update
             ),

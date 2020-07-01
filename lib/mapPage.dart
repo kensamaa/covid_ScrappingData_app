@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covidapp/widgets/user.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
@@ -134,14 +135,14 @@ class _mapPageState extends State<mapPage> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 100,
+            height: 120,
             width: double.infinity,
             decoration:
             BoxDecoration(
               gradient: LinearGradient(
                   colors: [
-                    Colors.deepPurple,
-                    Colors.deepPurpleAccent
+                    Colors.deepPurple[200],
+                    Colors.deepPurple[300]
                   ]
               ),
               color: Colors.black,
@@ -150,6 +151,32 @@ class _mapPageState extends State<mapPage> {
               //  color: Color(0xFFE5E5E5),
               //),
             ),
+            child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topCenter,
+          
+                      ),
+                      SizedBox(height: 40),
+                      Expanded(
+                        child: Stack(
+                          children: <Widget>[
+                            Center(
+                              child: SvgPicture.asset(
+                                'images/geo.svg',
+                                fit: BoxFit.fitHeight,
+                                alignment: Alignment.center,
+                                width: 200,
+                                
+                           
+                            
+                            )
+                             ,)
+                           
+                          ],
+                      ),),
+                ],),
             //child: Text((_currentPosition.latitude+_currentPosition.longitude).toString()),
           ),
 
@@ -175,28 +202,22 @@ class _mapPageState extends State<mapPage> {
                           height: 30,
                           width: 30,
                           point: new LatLng(_currentPosition.latitude, _currentPosition.longitude),
-                          builder: (ctx) =>Icon(Icons.pin_drop,color: Colors.red)
-
+                          builder: (ctx) =>Container(
+                                  key: Key('blue'),
+                                  child: Icon(Icons.location_on,color: Colors.red,size: 30.0,),
+                                  ),
                       ),
                       Marker(//this is emsi
                           height: 30,
                           width: 30,
                           point: new LatLng(33.541505, -7.673544),
-                          builder: (ctx) =>Icon(Icons.pin_drop,color: Colors.green)
+                          builder: (ctx) => Image.asset('images/emsi.jpg')
                       ),
-                      Marker(//this is hospital chaikh zaid
-                          height: 30,
-                          width: 30,
-
-                          point: new LatLng(33.5523758, -7.6699494),
-                          builder: (ctx) =>Container(
-                            child: Text("chaikh khalifa"),
-                          ),
-                      ),
+                      
 
                     ],
                   ),
-                  new CircleLayerOptions(
+                  /*new CircleLayerOptions(
                     circles: [
                       CircleMarker(
                         point: new LatLng(_currentPosition.latitude, _currentPosition.longitude),
@@ -208,7 +229,7 @@ class _mapPageState extends State<mapPage> {
 
                       )
                     ]
-                  )
+                  )*/
 
                 ],
               ),

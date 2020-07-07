@@ -16,7 +16,7 @@ the moroccocovid backend  repo and run it </p>
 <p><a href="https://github.com/kensamaa/CovidMoroccoScrapper">backend repository</a></p>
 <p>here is the <a href='https://drive.google.com/drive/folders/1skWrjne7qCSDUqwIvLqKM8k2nERIE6mZ?usp=sharing'>link</a> to video démonstration</p>
 <p>swipe right to see map and ur localisation, in the background the app will send data of ur android ip and your localisation and stock it in the database </p>
-
+<p>here is the link to video demo  <a href="https://drive.google.com/file/d/1kIT-GHBIE9515M8wpmN0v-IsfkmRWu6I/view?usp=sharing">demo video</a> </p>
 <h3>dependencies</h3>
 <ul>
   <li>http: ^0.12.1</li>

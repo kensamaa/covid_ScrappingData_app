@@ -25,3 +25,12 @@ the moroccocovid backend  repo and run it </p>
  <li> flutter_scan_bluetooth: ^1.1.0</li>
   <li>url_launcher: ^3.0.0</li>
 </ul>
+<h3>reference</h3>
+<ul>
+  <li>https://www.freecodecamp.org/news/the-ultimate-guide-to-web-scraping-with-node-js-daa2027dcd3/</li>
+  <li>https://www.youtube.com/watch?v=vfbdlC0tPhM</li>
+  <li>https://medium.com/@aruny3/flutter-localization-eae4c45acad</li>
+  <li>https://stackoverflow.com/questions/61696433/flutter-with-bluetooth</li>
+  <li> https://dart.dev/guides/packages/li>
+  <li>https://www.youtube.com/watch?v=zx6uMCoW2gQ&t=287s</li>
+</ul>

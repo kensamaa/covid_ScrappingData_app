@@ -104,22 +104,6 @@ class _MyHomePageState extends State<MyHomePage> {
        SoussMassa=(convertdatajson['SoussMassa']);
        LaayouneSakiaElHamra=(convertdatajson['LaayouneSakiaElHamra']);
        Guelmim=(convertdatajson['Guelmim']);
-
-      /*coronacity=new coronaCity(
-          new ville('casablanca', casablanca),
-        new ville('marakech', marakech),
-        new ville('Rabat', Rabat),
-        new ville('tanger', tanger),
-        new ville('Fesmeknes', Fesmeknes),
-        new ville('oriental', oriental),
-        new ville('beniMellal',  beniMellal),
-        new ville('DaraaTafilalet', DaraaTafilalet),
-        new ville('DakhlaOuedEdDahab', DakhlaOuedEdDahab),
-        new ville('SoussMassa', SoussMassa),
-        new ville('LaayouneSakiaElHamra', LaayouneSakiaElHamra),
-        new ville('Guelmim', Guelmim)
-      );
-      coronacity.toString();*/
       
     });
   }

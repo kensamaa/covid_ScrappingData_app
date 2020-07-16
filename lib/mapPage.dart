@@ -43,10 +43,6 @@ class _mapPageState extends State<mapPage> {
     _getCurrentLocation(); //get the location
     //setId();
     getDeviceinfo(); //get the id
-    //createAlbum(id,latitude,longitude);
-    //final User user = await createUser(id, latitude,longitude);
-    //user u=new user(id,longitude,latitude);
-    //sendDataUser(id.toString(),latitude.toString(),longitude.toString());
   }
 
   Future<http.Response> sendDataUser(String id, String lar, String lon) async {
@@ -87,7 +83,7 @@ class _mapPageState extends State<mapPage> {
       print("location");
       latitude = _currentPosition.latitude.toString();
       longitude = _currentPosition.longitude.toString();
-      //sendDataUser(id.toString(), latitude.toString(), longitude.toString());
+      sendDataUser(id.toString(), latitude.toString(), longitude.toString());
       print(latitude);
       print(longitude);
       //sendDataUser("id","latitude","longitude");
@@ -101,21 +97,7 @@ class _mapPageState extends State<mapPage> {
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-  /*
-  setId() async {
-    deviceId = await _getId();
-    print(deviceId);
-  }
-  Future<String> _getId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else {
-      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.androidId; // unique ID on Android
-    }
-  }*/
+  
   void getDeviceinfo() async {
     androidDeviceInfo = await deviceInfo
         .androidInfo; // instantiate Android Device Infoformation
@@ -209,19 +191,6 @@ class _mapPageState extends State<mapPage> {
                         builder: (ctx) => Image.asset('images/emsi.jpg')),
                   ],
                 ),
-                /*new CircleLayerOptions(
-                    circles: [
-                      CircleMarker(
-                        point: new LatLng(_currentPosition.latitude, _currentPosition.longitude),
-                        radius: 10,
-                        color: Colors.green,
-                        borderColor: Colors.red,
-                        borderStrokeWidth: 2,
-                        useRadiusInMeter: false,
-
-                      )
-                    ]
-                  )*/
               ],
             ),
           ),

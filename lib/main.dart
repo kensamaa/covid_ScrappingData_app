@@ -45,7 +45,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   //*******************+api
-    final String api="http://192.168.1.5:5000/last";//home
+    //final String api="http://192.168.1.5:5000/last";//home
+    final String api="http://192.168.1.4:5000/last";//home
   //final String api="http://192.168.1.42:5000/last";//school
   //final String api="http://192.168.43.195:5000/last";
   String awway,ddate;
@@ -79,7 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
       String died=convertdatajson['died'];
       String cure=convertdatajson['cured'];
       String Date=convertdatajson['date'];
-      ddate=Date.replaceAll('T', ' ').replaceAll('Z', ' ').replaceAll('-', '/');
+      try{
+          ddate=Date.replaceAll('T', ' ').replaceAll('Z', ' ').replaceAll('-', '/');
+      }
+      catch(e){
+        ddate="";
+      }
+      
 
       awway=awayy;
       //CoronaData(this.cases, this.dead, this.cured, this.away);

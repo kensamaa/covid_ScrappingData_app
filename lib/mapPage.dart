@@ -10,22 +10,20 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 //import 'package:flutter_blue/flutter_blue.dart';
 
-
-
 class mapPage extends StatefulWidget {
   @override
   _mapPageState createState() => _mapPageState();
 }
 
 class _mapPageState extends State<mapPage> {
-
-  MapController controller=new MapController();
+  MapController controller = new MapController();
   Position position;
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   //List<Marker> markers;
-  String deviceId,id,latitude,longitude;
-  DeviceInfoPlugin deviceInfo =DeviceInfoPlugin(); // instantiate device info plugin
+  String deviceId, id, latitude, longitude;
+  DeviceInfoPlugin deviceInfo =
+      DeviceInfoPlugin(); // instantiate device info plugin
   AndroidDeviceInfo androidDeviceInfo;
   //FlutterBlue flutterBlue = FlutterBlue.instance;//Obtain an instance
 
@@ -40,28 +38,27 @@ class _mapPageState extends State<mapPage> {
     }
 });
 */
-  Future<void> initState()  {
+  Future<void> initState() {
     super.initState();
-    _getCurrentLocation();//get the location
+    _getCurrentLocation(); //get the location
     //setId();
-    getDeviceinfo();//get the id
+    getDeviceinfo(); //get the id
     //createAlbum(id,latitude,longitude);
     //final User user = await createUser(id, latitude,longitude);
     //user u=new user(id,longitude,latitude);
-    sendDataUser("id","latitude","longitude");
-
+    //sendDataUser(id.toString(),latitude.toString(),longitude.toString());
   }
 
-  Future<http.Response> sendDataUser(String id,String lar,String lon) async {
+  Future<http.Response> sendDataUser(String id, String lar, String lon) async {
     var now = new DateTime.now();
     final http.Response response = await http.post(
-      'http://192.168.1.42:5000/user/add',
+      'http://192.168.1.5:5000/user/add',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        "PhoneId":id,
-        "latitude":lar,
+        "PhoneId": id,
+        "latitude": lar,
         "longitude": lon,
         "date": now.toString()
       }),
@@ -83,24 +80,27 @@ class _mapPageState extends State<mapPage> {
         .then((Position position) {
       setState(() {
         _currentPosition = position;
-        latitude=_currentPosition.latitude.toString();
-        longitude=_currentPosition.longitude.toString();
+        latitude = _currentPosition.latitude.toString();
+        longitude = _currentPosition.longitude.toString();
       });
 
       print("location");
-      latitude=_currentPosition.latitude.toString();
-      longitude=_currentPosition.longitude.toString();
-      sendDataUser("id","latitude","longitude");
-
+      latitude = _currentPosition.latitude.toString();
+      longitude = _currentPosition.longitude.toString();
+      //sendDataUser(id.toString(), latitude.toString(), longitude.toString());
+      print(latitude);
+      print(longitude);
+      //sendDataUser("id","latitude","longitude");
     }).catchError((e) {
       print(e);
     });
   }
 
-  getPosition()async{
-     position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
+  getPosition() async {
+    position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
+
   /*
   setId() async {
     deviceId = await _getId();
@@ -120,9 +120,7 @@ class _mapPageState extends State<mapPage> {
     androidDeviceInfo = await deviceInfo
         .androidInfo; // instantiate Android Device Infoformation
     setState(() {
-
       id = androidDeviceInfo.id;
-
     });
     id = androidDeviceInfo.id;
     print("id");
@@ -137,14 +135,9 @@ class _mapPageState extends State<mapPage> {
           Container(
             height: 120,
             width: double.infinity,
-            decoration:
-            BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [
-                    Colors.deepPurple[200],
-                    Colors.deepPurple[300]
-                  ]
-              ),
+                  colors: [Colors.deepPurple[200], Colors.deepPurple[300]]),
               color: Colors.black,
               //borderRadius: BorderRadius.circular(25),
               //border: Border.all(
@@ -152,72 +145,71 @@ class _mapPageState extends State<mapPage> {
               //),
             ),
             child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topCenter,
-          
-                      ),
-                      SizedBox(height: 40),
-                      Expanded(
-                        child: Stack(
-                          children: <Widget>[
-                            Center(
-                              child: SvgPicture.asset(
-                                'images/geo.svg',
-                                fit: BoxFit.fitHeight,
-                                alignment: Alignment.center,
-                                width: 200,
-                                
-                           
-                            
-                            )
-                             ,)
-                           
-                          ],
-                      ),),
-                ],),
-            //child: Text((_currentPosition.latitude+_currentPosition.longitude).toString()),
-          ),
-
-
-            Container(
-              height: 670,
-
-              child: FlutterMap(
-                mapController: controller,
-                options: new MapOptions(
-                  center: new LatLng(_currentPosition.latitude,_currentPosition.longitude),
-                  zoom: 13,
-                  //minZoom: 10.0
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
                 ),
-                layers: [
-                  new TileLayerOptions(
-                      urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                      subdomains: ['a', 'b', 'c']
-                  ),
-                  new MarkerLayerOptions(
-                    markers: [
-                      Marker(//this is user marker
-                          height: 30,
-                          width: 30,
-                          point: new LatLng(_currentPosition.latitude, _currentPosition.longitude),
-                          builder: (ctx) =>Container(
-                                  key: Key('blue'),
-                                  child: Icon(Icons.location_on,color: Colors.red,size: 30.0,),
-                                  ),
-                      ),
-                      Marker(//this is emsi
-                          height: 30,
-                          width: 30,
-                          point: new LatLng(33.541505, -7.673544),
-                          builder: (ctx) => Image.asset('images/emsi.jpg')
-                      ),
-                      
-
+                SizedBox(height: 40),
+                Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      Center(
+                        child: SvgPicture.asset(
+                          'images/geo.svg',
+                          fit: BoxFit.fitHeight,
+                          alignment: Alignment.center,
+                          width: 200,
+                        ),
+                      )
                     ],
                   ),
-                  /*new CircleLayerOptions(
+                ),
+              ],
+            ),
+            //child: Text((_currentPosition.latitude+_currentPosition.longitude).toString()),
+          ),
+          Container(
+            height: 670,
+            child: FlutterMap(
+              mapController: controller,
+              options: new MapOptions(
+                center: new LatLng(
+                    _currentPosition.latitude, _currentPosition.longitude),
+                zoom: 13,
+                //minZoom: 10.0
+              ),
+              layers: [
+                new TileLayerOptions(
+                    urlTemplate:
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    subdomains: ['a', 'b', 'c']),
+                new MarkerLayerOptions(
+                  markers: [
+                    Marker(
+                      //this is user marker
+                      height: 30,
+                      width: 30,
+                      point: new LatLng(_currentPosition.latitude,
+                          _currentPosition.longitude),
+                      builder: (ctx) => Container(
+                        key: Key('blue'),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.red,
+                          size: 30.0,
+                        ),
+                      ),
+                    ),
+                    Marker(
+                        //this is emsi
+                        height: 30,
+                        width: 30,
+                        point: new LatLng(33.541505, -7.673544),
+                        builder: (ctx) => Image.asset('images/emsi.jpg')),
+                  ],
+                ),
+                /*new CircleLayerOptions(
                     circles: [
                       CircleMarker(
                         point: new LatLng(_currentPosition.latitude, _currentPosition.longitude),
@@ -230,15 +222,11 @@ class _mapPageState extends State<mapPage> {
                       )
                     ]
                   )*/
-
-                ],
-              ),
+              ],
             ),
+          ),
         ],
       ),
     );
-
   }
-
-
 }
